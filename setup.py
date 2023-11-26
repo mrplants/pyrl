@@ -10,7 +10,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'numpy',
-        'scipy'
+        'scipy',
+        'mlflow'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

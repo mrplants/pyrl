@@ -2,6 +2,25 @@ import numpy as np
 from scipy import stats
 import numpy as np
 from scipy import stats
+import mlflow
+
+def update_mlfow_metrics(avg_reward_per_rollout_per_step: np.ndarray) -> None:
+    """
+    Updates the MLflow metrics for the current rollout.
+
+    Args:
+        avg_reward_per_rollout_per_step (np.ndarray): The average reward per step for the current rollout.
+    """
+    means, lower_bounds, upper_bounds = stepwise_confidence_interval(avg_reward_per_rollout_per_step)
+
+    for step, (mean, lower, upper) in enumerate(zip(means, lower_bounds, upper_bounds)):
+        mlflow.log_metrics({
+            'Mean Reward per Step': mean,
+            'Mean Reward per Step - 95 Lower Bound': lower,
+            'Mean Reward per Step - 95 Upper Bound': upper
+        }, step=step+1)
+    
+    mlflow.log_metric('Overall Mean Reward', means[-1])
 
 def stepwise_confidence_interval(data, confidence=0.95):
     """
