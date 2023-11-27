@@ -11,16 +11,23 @@ def update_mlfow_metrics(avg_reward_per_rollout_per_step: np.ndarray) -> None:
     Args:
         avg_reward_per_rollout_per_step (np.ndarray): The average reward per step for the current rollout.
     """
-    means, lower_bounds, upper_bounds = stepwise_confidence_interval(avg_reward_per_rollout_per_step)
+    if avg_reward_per_rollout_per_step.shape[0] == 1:
+        for step, mean in enumerate(avg_reward_per_rollout_per_step[0]):
+            mlflow.log_metrics({
+                'Total Reward per Step': mean,
+            }, step=step+1)
+        mlflow.log_metric('Overall Mean Reward', avg_reward_per_rollout_per_step[0][-1])
+    else:
+        means, lower_bounds, upper_bounds = stepwise_confidence_interval(avg_reward_per_rollout_per_step)
 
-    for step, (mean, lower, upper) in enumerate(zip(means, lower_bounds, upper_bounds)):
-        mlflow.log_metrics({
-            'Mean Reward per Step': mean,
-            'Mean Reward per Step - 95 Lower Bound': lower,
-            'Mean Reward per Step - 95 Upper Bound': upper
-        }, step=step+1)
-    
-    mlflow.log_metric('Overall Mean Reward', means[-1])
+        for step, (mean, lower, upper) in enumerate(zip(means, lower_bounds, upper_bounds)):
+            mlflow.log_metrics({
+                'Mean Reward per Step': mean,
+                'Mean Reward per Step - 95 Lower Bound': lower,
+                'Mean Reward per Step - 95 Upper Bound': upper
+            }, step=step+1)
+        
+        mlflow.log_metric('Overall Mean Reward', means[-1])
 
 def stepwise_confidence_interval(data, confidence=0.95):
     """
