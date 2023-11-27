@@ -9,9 +9,6 @@ setup(
     url='https://github.com/mrplants/pyrl',
     packages=find_packages(),
     install_requires=[
-        'numpy',
-        'scipy',
-        'mlflow'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
