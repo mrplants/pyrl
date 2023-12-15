@@ -1,0 +1,23 @@
+[project]
+name = "pyrl"
+version = "0.0.1"
+authors = [
+  { name="Sean Fitzgerald", email="fitzgerald.sean.t@gmail.com" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "numpy",
+]
+license = {text = "MIT License"}
+
+[project.urls]
+Homepage = "https://github.com/mrplants/pyrl"
+Issues = "https://github.com/mrplants/pyrl/issues"
+
