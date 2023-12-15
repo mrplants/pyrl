@@ -36,7 +36,7 @@ class Memory(Generic[Observation, Context, Action, Reward]):
         """
         return observation
     
-    def iterate_context_transitions(self) -> Generator[(Context, Transition), None, None]:
+    def iterate_context_transitions(self) -> Generator[Transition, None, None]:
         """ Iterates over the context transitions.
 
         Yields:
