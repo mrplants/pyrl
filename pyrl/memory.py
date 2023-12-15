@@ -13,7 +13,15 @@ class Memory(Generic[Observation, Context, Action, Reward]):
     """
     def __init__(self) -> None:
         self._transitions = deque()
+    
+    def __len__(self) -> int:
+        """ Gets the number of transitions in the memory.
 
+        Returns:
+            int: The number of transitions in the memory.
+        """
+        return len(self._transitions)
+    
     def add_transition(self, observation:Observation, action:Action, next_observation:Observation, reward:Reward) -> None:
         """ Adds a transition to the memory.
 
@@ -36,7 +44,7 @@ class Memory(Generic[Observation, Context, Action, Reward]):
         """
         return observation
     
-    def iterate_context_transitions(self) -> Generator[Transition, None, None]:
+    def __iter__(self) -> Generator[Transition, None, None]:
         """ Iterates over the context transitions.
 
         Yields:

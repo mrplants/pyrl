@@ -57,7 +57,7 @@ class DiscretePolicy(BasePolicy[DiscreteContext, DiscreteAction, FloatReward]):
             memory (Memory): The memory of the agent.
         """
         # Get the transition probabilities and rewards
-        transitions = list(memory.iterate_context_transitions())
+        transitions = list(memory)
         P = self.get_transition_probabilities(transitions)
         R = self.get_rewards(transitions)
         
